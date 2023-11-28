@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  # Updated to v2 for checkout action
+        uses: actions/checkout@v2
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.0.2
@@ -20,7 +20,7 @@ jobs:
         run: nuget restore
 
       - name: Build WPF ClickOnce Installer
-        run: msbuild /p:Configuration=Release 
+        run: msbuild /p:Configuration=Release
 
   deploy:
     runs-on: windows-latest
@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Download ClickOnce Deployment Artifact
-        uses: actions/download-artifact@v2  # Updated to v2 for download-artifact action
+        uses: actions/download-artifact@v2
         with:
           name: ClickOnceDeployment
           path: D:\Lab Utility\eLab_project\Installer
