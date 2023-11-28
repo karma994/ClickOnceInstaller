@@ -3,7 +3,7 @@ name: CI/CD for WPF ClickOnce Installer
 on:
   push:
     branches:
-      - main
+      - feature/ClickOnceInstaller
 
 jobs:
   build:
