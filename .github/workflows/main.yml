@@ -35,5 +35,5 @@ jobs:
       - uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: WPF_ClickOnce/WPF_ClickOnce/bin/Release/net6.0-windows/*.exe
+          pattern: https://github.com/karma994/ClickOnceInstaller/WPF_ClickOnce/WPF_ClickOnce/bin/Release/net6.0-windows/*.exe
           release-url: ${{ steps.create_release.outputs.upload_url }}
