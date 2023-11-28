@@ -6,7 +6,7 @@ on:
       - "main/v*"
 
 env:
-  PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
+  PROJECT_PATH: https://github.com/karma994/ClickOnceInstaller/WPF_ClickOnce/WPF_ClickOnce.csproj
 
 jobs:
   deploy:
