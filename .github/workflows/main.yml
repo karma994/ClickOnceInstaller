@@ -6,7 +6,7 @@ on:
       - "main/v*"
 
 env:
-  PROJECT_PATH: WPFClickOnce/WPFClickOnce.csproj
+  PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
 
 jobs:
   deploy:
