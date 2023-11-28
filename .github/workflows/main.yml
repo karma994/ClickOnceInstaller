@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v2  # Updated to v2 for upload-artifact action
         with:
           name: ClickOnceDeployment
-          path: <path-to-artifact-directory>  # Replace with the actual path where your ClickOnce deployment files are located
+          path: D:\Lab Utility\eLab_project\Installer  # Replace with the actual path where your ClickOnce deployment files are located
 
   deploy:
     runs-on: windows-latest
