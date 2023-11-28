@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2  # Updated to v2 for checkout action
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.0.2
@@ -22,13 +22,19 @@ jobs:
       - name: Build WPF ClickOnce Installer
         run: msbuild /p:Configuration=Release
 
+      - name: Upload ClickOnce Deployment Artifact
+        uses: actions/upload-artifact@v2  # Updated to v2 for upload-artifact action
+        with:
+          name: ClickOnceDeployment
+          path: <path-to-artifact-directory>  # Replace with the actual path where your ClickOnce deployment files are located
+
   deploy:
     runs-on: windows-latest
     needs: build
 
     steps:
       - name: Download ClickOnce Deployment Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2  # Updated to v2 for download-artifact action
         with:
           name: ClickOnceDeployment
           path: D:\Lab Utility\eLab_project\Installer
