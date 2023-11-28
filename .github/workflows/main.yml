@@ -20,9 +20,7 @@ jobs:
         run: nuget restore
 
       - name: Build WPF ClickOnce Installer
-        run: msbuild /p:Configuration=Release
-
- 
+        run: msbuild /p:Configuration=Release 
 
   deploy:
     runs-on: windows-latest
