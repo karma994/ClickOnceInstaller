@@ -18,13 +18,27 @@ jobs:
 
     - name: Restore NuGet packages
       run: msbuild /t:restore
+      # Explanation: Restores NuGet packages for the WPF project.
 
     - name: Build WPF ClickOnce Installer
       run: msbuild /p:Configuration=Release
+      # Explanation: Builds the WPF ClickOnce Installer in Release configuration.
 
   deploy:
     runs-on: windows-latest
     needs: build
     steps:
     - name: Publish ClickOnce Application
-      run: msbuild /t:publish /v:d
+      run: |
+        msbuild /t:publish /p:Configuration=Release /p:PublishDir=D:\Lab\Utility\eLab_project\Installer /v:d
+      # Explanation:
+      # - Configures the deployment to use the Release configuration.
+      # - Specifies the target directory for publishing as "D:\Lab\Utility\eLab_project\Installer".
+      # - Increases the verbosity of MSBuild output for better debugging (/v:d).
+
+      # Note: Replace "D:\Lab\Utility\eLab_project\Installer" with your actual publishing path.
+
+      # Additional considerations:
+      # - Ensure GitHub Actions runner has necessary permissions to write to the specified directory.
+      # - If the path is on a network share, consider setting up appropriate credentials.
+
