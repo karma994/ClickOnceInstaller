@@ -1,11 +1,13 @@
-name: "Deploy WPFClickOnce"
+name: "Deploy Class Commands"
 
 on:
   push:
-    tags: 
-      - "main/v*"      
+    tags:
+      - "class-commands/v*"
+
 env:
   PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
+
 jobs:
   deploy:
     runs-on: windows-latest
@@ -20,7 +22,7 @@ jobs:
 
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
 
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r -p:PublishSingleFile=true --no-build
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true --no-build
 
       - uses: actions/create-release@v1
         id: create_release
@@ -33,5 +35,5 @@ jobs:
       - uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: WPF_ClickOnce/WPF_ClickOnce/bin/publish/*.exe
+          pattern: WPF_ClickOnce/bin/Release/netcoreapp3.1/win-x64/publish/*.exe
           release-url: ${{ steps.create_release.outputs.upload_url }}
