@@ -27,4 +27,4 @@ jobs:
     needs: build
     steps:
     - name: Publish ClickOnce Application
-      run: msbuild /t:publish
+      run: msbuild /t:publish /v:d
