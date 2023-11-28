@@ -3,7 +3,7 @@ name: "Deploy WPFClickOnce"
 on:
   push:
     tags:
-      - "main/v*"
+      - "feature/main/v*"
 
 env:
   PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
