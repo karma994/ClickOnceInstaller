@@ -6,7 +6,7 @@ on:
       - "main/v*"
 
 env:
-  PROJECT_PATH: https://github.com/karma994/ClickOnceInstaller/WPF_ClickOnce/WPF_ClickOnce.csproj
+  PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
 
 jobs:
   deploy:
@@ -35,5 +35,5 @@ jobs:
       - uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: https://github.com/karma994/ClickOnceInstaller/WPF_ClickOnce/WPF_ClickOnce/bin/Release/net6.0-windows/*.exe
+          pattern: WPF_ClickOnce/WPF_ClickOnce/bin/Release/net6.0-windows/*.exe
           release-url: ${{ steps.create_release.outputs.upload_url }}
