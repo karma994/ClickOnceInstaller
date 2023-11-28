@@ -1,0 +1,30 @@
+name: CI/CD for WPF ClickOnce Installer
+
+on:
+  push:
+    branches:
+      - feature/ClickOnceInstaller
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Restore NuGet packages
+      run: msbuild /t:restore
+
+    - name: Build WPF ClickOnce Installer
+      run: msbuild /p:Configuration=Release
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    steps:
+    - name: Publish ClickOnce Application
+      run: msbuild /t:publish
