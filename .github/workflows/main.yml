@@ -26,7 +26,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ClickOnceDeployment
-          path: D:\Lab Utility\eLab_project\Installer
+          path: https://github.com/karma994/ClickOnceInstaller
 
   deploy:
     runs-on: windows-latest
@@ -37,4 +37,4 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: ClickOnceDeployment
-          path: D:\Lab Utility\eLab_project\Installer
+          path: https://github.com/karma994/ClickOnceInstaller
