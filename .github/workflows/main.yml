@@ -1,40 +1,39 @@
-name: CI/CD for WPF ClickOnce Installer
+name: "Deploy WPFClickOnce"
 
 on:
   push:
-    branches:
-      - feature/ClickOnceInstaller
+    tags:
+      - "main/v*"
+
+env:
+  PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
 
 jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.2
-
-      - name: Restore NuGet packages
-        run: nuget restore
-
-      - name: Build WPF ClickOnce Installer
-        run: msbuild /p:Configuration=Release
-
-      - name: Upload ClickOnce Deployment Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ClickOnceDeployment
-          path: D:\Lab Utility\eLab_project\Installer
-
   deploy:
     runs-on: windows-latest
-    needs: build
-
     steps:
-      - name: Download ClickOnce Deployment Artifact
-        uses: actions/download-artifact@v2
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-dotnet@v1
         with:
-          name: ClickOnceDeployment
-          path: D:\Lab Utility\eLab_project\Installer
+          dotnet-version: 6.0.x
+
+      - run: dotnet restore ${{ env.PROJECT_PATH }}
+
+      - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r -p:PublishSingleFile=true --no-build
+
+      - uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+
+      - uses: csexton/release-asset-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pattern: WPF_ClickOnce/WPF_ClickOnce/bin/publish/*.exe
+          release-url: ${{ steps.create_release.outputs.upload_url }}
