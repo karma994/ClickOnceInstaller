@@ -1,4 +1,4 @@
-name: Deploy Class Commands
+name: "Deploy Class Commands"
 
 on:
   push:
@@ -16,9 +16,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Clean Output Directory
-        run: Remove-Item -Recurse -Force WPF_ClickOnce/bin
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
@@ -32,9 +29,8 @@ jobs:
 
       - name: Publish ClickOnce Application
         run: |
-          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/Installer --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }} -r win-x64 --self-contained
-        shell: pwsh
-
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/Installer --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
+           
       - name: List Published Files
         run: |
           ls -R WPF_ClickOnce/Installer
