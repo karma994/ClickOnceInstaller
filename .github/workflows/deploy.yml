@@ -28,8 +28,11 @@ jobs:
         run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
 
       - name: Publish ClickOnce Application
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/publish --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
-	run: dotnet publish ${{ env.PROJECT_PATH }} /t:Rebuild /v:detailed
+        run: |
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/publish --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
+          dotnet msbuild ${{ env.PROJECT_PATH }} /t:Rebuild /v:detailed
+        shell: powershell
+
       - name: List Published Files
         run: ls -R WPF_ClickOnce/bin/publish
 
