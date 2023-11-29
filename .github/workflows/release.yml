@@ -32,7 +32,7 @@ jobs:
 
       - name: Publish ClickOnce Application
         run: |
-          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOncebin/Release/net6.0-windows/win-x64/app.publish --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }} -r win-x64 --self-contained
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/Release/net6.0-windows/win-x64/app.publish --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }} -r win-x64 --self-contained
         shell: pwsh
 
       - name: List Published Files
@@ -53,5 +53,5 @@ jobs:
         uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-          pattern: WPF_ClickOncebin/Release/net6.0-windows/win-x64/app.publish/*.application
+          pattern: WPF_ClickOnce/bin/Release/net6.0-windows/win-x64/app.publish/*.application
           release-url: ${{ steps.create_release.outputs.upload_url }}
