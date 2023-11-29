@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock Text="WELCOME" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
+        <TextBlock Text="WELCOMscdcE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"/>
         <Button Content="Click Me" Click="Button_Click"/>
         <TextBlock Text="ThimphutechParkscedfergfrgrg swfegrgrgrgrwdefLimited "/>
 
