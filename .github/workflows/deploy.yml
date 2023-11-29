@@ -1,10 +1,11 @@
 name: "Deploy Class Commands"
 
 on:
-  push:
+  push: 
     tags:
-      - "class-commands/v*"
-
+      - "class-commands/v*" 
+    tags: 
+      - "feature/main/v*"       
 env:
   PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
 
