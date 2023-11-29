@@ -29,13 +29,13 @@ jobs:
 
       - name: Publish ClickOnce Application
         run: |
-          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o '\\desktop-vlfenfh\Installer' --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o 'WPF_ClickOnce/Installer --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
           dotnet msbuild ${{ env.PROJECT_PATH }} /t:Rebuild /v:detailed
         shell: powershell
 
       - name: List Published Files
         run: |
-          ls -R '\\desktop-vlfenfh\Installer'
+          ls -R WPF_ClickOnce/Installer
         shell: powershell
 
       - name: Create GitHub Release
@@ -51,5 +51,5 @@ jobs:
         uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-          pattern: '\\desktop-vlfenfh\Installer\*'
+          pattern: WPF_ClickOnce/Installer/*.application
           release-url: ${{ steps.create_release.outputs.upload_url }}
