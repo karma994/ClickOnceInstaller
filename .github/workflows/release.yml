@@ -16,6 +16,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Clean Output Directory
+        run: Remove-Item -Recurse -Force WPF_ClickOnce/bin
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
@@ -29,7 +32,8 @@ jobs:
 
       - name: Publish ClickOnce Application
         run: |
-          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/Release/net6.0-windows/win-x64/app.publish --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }} -r win-x64 --self-contained
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/Installer --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }} -r win-x64 --self-contained
+     shell: pwsh
            
       - name: List Published Files
         run: |
@@ -49,5 +53,5 @@ jobs:
         uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-          pattern: WPF_ClickOnce/bin/Release/net6.0-windows/win-x64/app.publish/*.application
+          pattern: WPF_ClickOnce/Installer/*.application
           release-url: ${{ steps.create_release.outputs.upload_url }}
