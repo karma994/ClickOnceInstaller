@@ -20,9 +20,9 @@ jobs:
 
       - run: dotnet build -c Release
 
-      - run: dotnet publish -c Release -r win10-x64 -f ClickOnce
+      - run: dotnet publish -c Release -r win10-x64 -f net6.0-windows -o ./publish
 
       - uses: actions/upload-artifact@v2
         with:
           name: clickonce-app
-          path: ${{ runner.tempDirectory }}/publish/ProjectName.application
+          path: ./publish
