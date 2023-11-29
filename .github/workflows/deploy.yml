@@ -21,7 +21,7 @@ jobs:
 
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
 
-      - run: dotnet publish ${{ env.PROJECT_PATH }}
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/publish --no-build
 
       - uses: actions/create-release@v1
         id: create_release
@@ -34,5 +34,5 @@ jobs:
       - uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-          pattern: WPF_ClickOnce/Installer/*.exe
-          release-url: https://uploads.github.com/repos/karma994/ClickOnceInstaller/releases/${{ steps.create_release.outputs.id }}/assets{?name,label}
+          pattern: WPF_ClickOnce/bin/publish/*.exe
+          release-url: ${{ steps.create_release.outputs.upload_url }}
