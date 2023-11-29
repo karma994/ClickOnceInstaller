@@ -1,5 +1,0 @@
-C:\Users\USER\source\repos\WPF_ClickOnce\WPF_ClickOnce\bin\Release\net6.0-windows\app.publish\WPF_ClickOnce.exe
-C:\Users\USER\source\repos\WPF_ClickOnce\WPF_ClickOnce\bin\Release\net6.0-windows\app.publish\WPF_ClickOnce.dll
-C:\Users\USER\source\repos\WPF_ClickOnce\WPF_ClickOnce\bin\Release\net6.0-windows\app.publish\WPF_ClickOnce.deps.json
-C:\Users\USER\source\repos\WPF_ClickOnce\WPF_ClickOnce\bin\Release\net6.0-windows\app.publish\WPF_ClickOnce.runtimeconfig.json
-C:\Users\USER\source\repos\WPF_ClickOnce\WPF_ClickOnce\bin\Release\net6.0-windows\app.publish\WPF_ClickOnce.pdb
