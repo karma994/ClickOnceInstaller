@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
-  PUBLISH_PROFILE: WPF_ClickOnce/Properties/PublishProfiles/YourClickOnceProfile.pubxml
+  PUBLISH_PROFILE: WPF_ClickOnce/Properties/PublishProfiles/ClickOnceProfile.pubxml
 
 jobs:
   deploy:
