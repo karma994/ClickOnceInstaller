@@ -1,0 +1,53 @@
+name: "Deploy Class Commands"
+
+on:
+  push:
+    tags:
+      - "class-commands/v*"
+
+env:
+  PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
+  PUBLISH_PROFILE: WPF_ClickOnce/Properties/PublishProfiles/ClickOnceProfile.pubxml
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.x
+
+      - name: Restore Dependencies
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+
+      - name: Build Project
+        run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+
+      - name: Publish ClickOnce Application
+        run: |
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/Installer --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
+           
+      - name: List Published Files
+        run: |
+          ls -R WPF_ClickOnce/Installer
+        shell: powershell
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+
+      - name: Upload ClickOnce Assets
+        uses: csexton/release-asset-action@v2
+        with:
+          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          pattern: WPF_ClickOnce/Installer/*.application
+          release-url: ${{ steps.create_release.outputs.upload_url }}
