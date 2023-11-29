@@ -1,36 +1,49 @@
 name: "Deploy Class Commands"
 
 on:
-  push: 
+  push:
     tags:
-      - "class-commands/v*"           
+      - "class-commands/v*"
+
 env:
   PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
+  PUBLISH_PROFILE: WPF_ClickOnce/Properties/PublishProfiles/ClickOnceProfile.pubxml
 
 jobs:
   deploy:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - uses: actions/setup-dotnet@v1
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.x
 
-      - run: dotnet restore ${{ env.PROJECT_PATH }}
+      - name: Restore Dependencies
+        run: dotnet restore ${{ env.PROJECT_PATH }}
 
-      - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/publish --no-build
-      - run: ls -R WPF_ClickOnce/bin/publish
-      - uses: actions/create-release@v1
+      - name: Build Project
+        run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+
+      - name: Publish ClickOnce Application
+        run: msbuild ${{ env.PROJECT_PATH }} /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
+
+      - name: List Published Files
+        run: ls -R WPF_ClickOnce/bin/publish
+
+      - name: Create GitHub Release
         id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
 
-      - uses: csexton/release-asset-action@v2
+      - name: Upload ClickOnce Assets
+        uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           pattern: WPF_ClickOnce/bin/publish/*.exe
