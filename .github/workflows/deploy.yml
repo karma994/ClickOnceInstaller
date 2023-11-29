@@ -1,53 +1,28 @@
-name: "Deploy Class Commands"
+name: "Generate ClickOnce Application"
 
 on:
   push:
-    tags:
-      - "class-commands/v*"
-
-env:
-  PROJECT_PATH: WPF_ClickOnce/WPF_ClickOnce.csproj
-  
+    branches:
+      - feature/ClickOnceInstaller
 
 jobs:
-  deploy:
+  build:
     runs-on: windows-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.x
 
-      - name: Restore Dependencies
-        run: dotnet restore ${{ env.PROJECT_PATH }}
+      - run: dotnet restore
 
-      - name: Build Project
-        run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+      - run: dotnet build -c Release
 
-      - name: Publish ClickOnce Application
-        run: |
-          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/Debug/net6.0-windows/win-x64/*.application --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
-          dotnet msbuild ${{ env.PROJECT_PATH }} /t:Rebuild /v:detailed
-        shell: powershell
+      - run: dotnet publish -c Release -r win10-x64 -f ClickOnce
 
-      - name: List Published Files
-        run: ls -R WPF_ClickOnce/bin/Debug/net6.0-windows/win-x64/*.application
-
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-
-      - name: Upload ClickOnce Assets
-        uses: csexton/release-asset-action@v2
-        with:
-          github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-          pattern: WPF_ClickOnce/bin/Debug/net6.0-windows/win-x64/*.application
-          release-url: ${{ steps.create_release.outputs.upload_url }}
+          name: clickonce-app
+          path: ${{ runner.tempDirectory }}/publish/ProjectName.application
