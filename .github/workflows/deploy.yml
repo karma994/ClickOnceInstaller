@@ -29,12 +29,12 @@ jobs:
 
       - name: Publish ClickOnce Application
         run: |
-          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce--no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/Debug/net6.0-windows/win-x64/publish --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
           dotnet msbuild ${{ env.PROJECT_PATH }} /t:Rebuild /v:detailed
         shell: powershell
 
       - name: List Published Files
-        run: ls -R WPF_ClickOnce/
+        run: ls -R WPF_ClickOnce/bin/Debug/net6.0-windows/win-x64/publish
 
       - name: Create GitHub Release
         id: create_release
@@ -49,5 +49,5 @@ jobs:
         uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-          pattern: WPF_ClickOnce/
+          pattern: WPF_ClickOnce/bin/Debug/net6.0-windows/win-x64/publish
           release-url: ${{ steps.create_release.outputs.upload_url }}
