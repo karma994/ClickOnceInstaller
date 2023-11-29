@@ -29,7 +29,7 @@ jobs:
 
       - name: Publish ClickOnce Application
         run: |
-          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o WPF_ClickOnce/bin/Debug/net6.0-windows/win-x64/*.application --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
+          dotnet publish ${{ env.PROJECT_PATH }} -c Release -o \\desktop-vlfenfh\Installer --no-build /p:DeployOnBuild=true /p:PublishProfile=${{ env.PUBLISH_PROFILE }}
           dotnet msbuild ${{ env.PROJECT_PATH }} /t:Rebuild /v:detailed
         shell: powershell
 
@@ -49,5 +49,5 @@ jobs:
         uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-          pattern: WPF_ClickOnce/bin/Debug/net6.0-windows/win-x64/*.application
+          pattern: \\desktop-vlfenfh\Installer
           release-url: ${{ steps.create_release.outputs.upload_url }}
