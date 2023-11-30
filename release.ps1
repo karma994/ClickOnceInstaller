@@ -1,3 +1,5 @@
+# From https://janjones.me/posts/clickonce-installer-build-publish-github/.
+
 [CmdletBinding(PositionalBinding=$false)]
 param (
     [switch]$OnlyBuild=$false
@@ -62,8 +64,37 @@ if ($OnlyBuild) {
     exit
 }
 
-# Stage and commit in the current branch.
-Write-Output "Staging..."
-git add -A
-Write-Output "Committing..."
-git commit -m "Update to v$version"
+# Clone `gh-pages` branch.
+$ghPagesDir = "gh-pages"
+if (-Not (Test-Path $ghPagesDir)) {
+    git clone $(git config --get remote.origin.url) -b gh-pages `
+        --depth 1 --single-branch $ghPagesDir
+}
+
+Push-Location $ghPagesDir
+try {
+    # Remove previous application files.
+    Write-Output "Removing previous files..."
+    if (Test-Path "Application Files") {
+        Remove-Item -Path "Application Files" -Recurse
+    }
+    if (Test-Path "$appName.application") {
+        Remove-Item -Path "$appName.application"
+    }
+
+    # Copy new application files.
+    Write-Output "Copying new files..."
+    Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
+        -Destination . -Recurse
+
+    # Stage and commit.
+    Write-Output "Staging..."
+    git add -A
+    Write-Output "Committing..."
+    git commit -m "Update to v$version"
+
+    # Push.
+    git push
+} finally {
+    Pop-Location
+}
