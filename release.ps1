@@ -108,9 +108,11 @@ $localDir = "D:\app"
 if (-not (Test-Path $localDir -PathType Container)) {
     New-Item -Path $localDir -ItemType Directory
 }
-    git archive --format zip --output "$localDir\Application_Files.zip" HEAD "Application Files"
-    Expand-Archive -Path "$localDir\Application_Files.zip" -Destination $localDir
-    Remove-Item "$localDir\Application_Files.zip"
+
+# Use git archive to create a zip file from the 'Application Files' directory
+git archive --format zip --output "$localDir\Application_Files.zip" "gh-pages:Application Files"
+Expand-Archive -Path "$localDir\Application_Files.zip" -Destination $localDir
+Remove-Item "$localDir\Application_Files.zip"
        	
 
 } finally {
