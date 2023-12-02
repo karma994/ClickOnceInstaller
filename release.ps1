@@ -78,6 +78,8 @@ if (-Not (Test-Path $ghPagesDir)) {
 
 Push-Location $ghPagesDir
 try {
+    # Remove untracked files and directories.
+    git clean -fdX
     # Remove previous application files.
     Write-Output "Removing previous files..."
     if (Test-Path "Application Files") {
@@ -100,6 +102,19 @@ try {
 
     # Push.
     git push
+
+    # Clone to local directory
+$localDir = "D:\app"
+if (-not (Test-Path $localDir -PathType Container)) {
+    New-Item -Path $localDir -ItemType Directory
+}
+    git archive --format zip --output "$localDir\Application_Files.zip" HEAD "Application Files"
+    Expand-Archive -Path "$localDir\Application_Files.zip" -Destination $localDir
+    Remove-Item "$localDir\Application_Files.zip"
+       	
+
 } finally {
     Pop-Location
 }
+
+ 
