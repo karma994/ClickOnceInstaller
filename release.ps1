@@ -94,15 +94,6 @@ try {
     Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
         -Destination . -Recurse
 
-    # Stage and commit.
-    Write-Output "Staging..."
-    git add -A
-    Write-Output "Committing..."
-    git commit -m "Update to v$version"
-
-    # Push.
-    git push
-
     # Clone to local directory
 $localDir = "D:\app"
 if (-not (Test-Path $localDir -PathType Container)) {
@@ -113,6 +104,17 @@ if (-not (Test-Path $localDir -PathType Container)) {
 git archive --format zip --output "$localDir\Application_Files.zip" "gh-pages:Application Files"
 Expand-Archive -Path "$localDir\Application_Files.zip" -Destination $localDir
 Remove-Item "$localDir\Application_Files.zip"
+
+    # Stage and commit.
+    Write-Output "Staging..."
+    git add -A
+    Write-Output "Committing..."
+    git commit -m "Update to v$version"
+
+    # Push.
+    git push
+
+   
        	
 
 } finally {
