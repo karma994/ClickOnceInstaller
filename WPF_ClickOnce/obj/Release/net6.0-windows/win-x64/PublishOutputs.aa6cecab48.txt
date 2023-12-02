@@ -1,5 +1,0 @@
-D:\Lab Utility\eLab_project\WPF_ClickOnce\WPF_ClickOnce\bin\publish\WPF_ClickOnce.exe
-D:\Lab Utility\eLab_project\WPF_ClickOnce\WPF_ClickOnce\bin\publish\WPF_ClickOnce.dll
-D:\Lab Utility\eLab_project\WPF_ClickOnce\WPF_ClickOnce\bin\publish\WPF_ClickOnce.deps.json
-D:\Lab Utility\eLab_project\WPF_ClickOnce\WPF_ClickOnce\bin\publish\WPF_ClickOnce.runtimeconfig.json
-D:\Lab Utility\eLab_project\WPF_ClickOnce\WPF_ClickOnce\bin\publish\WPF_ClickOnce.pdb
