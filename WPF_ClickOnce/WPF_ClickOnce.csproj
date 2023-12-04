@@ -5,11 +5,51 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    
+ 
+		  <ApplicationRevision>1</ApplicationRevision>
+		  <ApplicationVersion>1.0.0.*</ApplicationVersion>
+		  <BootstrapperEnabled>True</BootstrapperEnabled>
+		  <Configuration>Release</Configuration>
+		  <CreateWebPageOnPublish>True</CreateWebPageOnPublish>
+		  <GenerateManifests>true</GenerateManifests>
+		  <Install>True</Install>
+		  <InstallFrom>Unc</InstallFrom>
+		  <InstallUrl>\\DESKTOP-VLFENFH\Installer\</InstallUrl>
+		  <IsRevisionIncremented>True</IsRevisionIncremented>
+		  <IsWebBootstrapper>False</IsWebBootstrapper>
+		  <MapFileExtensions>True</MapFileExtensions>
+		  <OpenBrowserOnPublish>False</OpenBrowserOnPublish>
+		  <Platform>Any CPU</Platform>
+		  <PublishDir>D:\Installer\</PublishDir>
+		  <!--<PublishUrl>D:\Installer\</PublishUrl>-->
+		  <PublishProtocol>ClickOnce</PublishProtocol>
+		  <!--<PublishReadyToRun>False</PublishReadyToRun>-->
+		  <!--<publishsinglefile>false</publishsinglefile>-->
+		  <!--<RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
+		  <!--<SelfContained>False</SelfContained>-->
+		  <SignatureAlgorithm>(none)</SignatureAlgorithm>
+		  <SignManifests>False</SignManifests>
+		  <SkipPublishVerification>false</SkipPublishVerification>
+		  <!--<TargetFramework>net6.0-windows</TargetFramework>-->
+		  <UpdateEnabled>True</UpdateEnabled>
+		  <UpdateMode>Foreground</UpdateMode>
+		  <UpdateRequired>True</UpdateRequired>
+		  <WebPageFileName>Publish.html</WebPageFileName>
+		  <CreateDesktopShortcut>False</CreateDesktopShortcut>
+		  <DisallowUrlActivation>False</DisallowUrlActivation>
+		  <ExcludeDeploymentUrl>False</ExcludeDeploymentUrl>
+		  <TrustUrlParameters>False</TrustUrlParameters>
+		  <UseApplicationTrust>False</UseApplicationTrust>  
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.8.3" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.8.3" />
   </ItemGroup>
 
 </Project>
